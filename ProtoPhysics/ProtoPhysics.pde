@@ -1,6 +1,6 @@
 //This is a prototype for a poly collision detection
 boolean play = true;
-boolean shoot = false;
+boolean shoot = true;
 ArrayList<Polygon> shapes = new ArrayList<Polygon>();
 Polygon myPoly;
 Polygon pigs;
@@ -20,13 +20,10 @@ void setup() {
 }
 void draw() {
   //UPDATE EVERYTHING
-  fill(255);
-  text("Score: " + score, 20, 20);
 
-  println(score);
 
   PVector mouse = new PVector(mouseX, mouseY);
-   bullet.position.x = myPoly.position.x;
+  bullet.position.x = myPoly.position.x;
 
 
   if (play) myPoly.position = mouse; // make myPoly follow the mouse position
@@ -38,31 +35,33 @@ void draw() {
 
   float time = millis()/1000.0; // get number of seconds as a float
   float velocity = speed * (time/2);
- 
+
   if (play == true) {
-     pigs.position.y += velocity;
-  if (velocity >= 50) velocity = 30;
+    pigs.position.y += velocity;
+    fill(255);
+    text("Score: " + score, 20, 20);
+
+    println(score);
+    if (velocity >= 50) velocity = 30;
 
 
     if (pigs.position.y >= 500) {
       pigs.position.x = random(85, 715);
       score = score + 100;
     }
-    if(bullet.colliding == true && pigs.colliding == true) {
+    if (bullet.colliding == true && pigs.colliding == true) {
       pigs.position.x = random(85, 715);
       pigs.position.y = -100;
       score = score + 200;
-      
     }
-    if(shoot == true){
+    if (shoot == true) {
       bullet.position.y -= 20;
-     
-      if(bullet.position.y <= -20){
+
+      if (bullet.position.y <= -20) {
         bullet.position.y = myPoly.position.y -10;
         shoot = false;
       }
     }
-    
   }
   if (pigs.position.y >= 500) pigs.position.y = -100;
 
@@ -91,29 +90,30 @@ Polygon makePiggies() {
   Polygon pig = new Polygon();
   //p.moving = true;
   shapes.add(pig);
-  pig.addPoint(-10, -10);
-  pig.addPoint(10, -30);
-  pig.addPoint(20, 30);
-  pig.addPoint(-20, 20);
+  pig.addPoint(0, 0);
+  pig.addPoint(30,0);
+  pig.addPoint(30, -20);
+  pig.addPoint(0, -20);
   return pig;
 }
 Polygon makePlayer() {
   Polygon p = new Polygon();
   p.scale = 3;
   shapes.add(p);
-  p.addPoint(-10, -10);
-  p.addPoint(10, -30);
+  p.addPoint(0,0);
+  p.addPoint(20,0);
   p.addPoint(20, 30);
+  p.addPoint(0,30);
   return p;
 }
 Polygon makeBullet() {
   Polygon b = new Polygon();
   b.scale = 1;
   shapes.add(b);
-  b.addPoint(1, 1);
-  b.addPoint(2, 2);
-  b.addPoint(3, 1);
-  b.position = new PVector(myPoly.position.x , myPoly.position.y -10);
+  b.addPoint(5, 5);
+  b.addPoint(7, 7);
+  b.addPoint(8, 6);
+  b.position = new PVector(myPoly.position.x, myPoly.position.y -10);
   return b;
 }
 
