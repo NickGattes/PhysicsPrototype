@@ -1,4 +1,4 @@
-
+//This is a prototype for a poly collision detection
 boolean play = true;
 boolean shoot = false;
 ArrayList<Polygon> shapes = new ArrayList<Polygon>();
